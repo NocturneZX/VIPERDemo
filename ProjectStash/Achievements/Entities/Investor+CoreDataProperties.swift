@@ -2,7 +2,7 @@
 //  Investor+CoreDataProperties.swift
 //  
 //
-//  Created by Julio Reyes on 8/1/18.
+//  Created by Julio Reyes on 8/2/18.
 //
 //
 
@@ -16,7 +16,6 @@ extension Investor {
         return NSFetchRequest<Investor>(entityName: "Investor")
     }
 
-    @NSManaged public var investorAchievements: NSObject?
-    @NSManaged public var investorOverviewTitle: String?
+    @NSManaged public var investorAchievements: String?
 
 }

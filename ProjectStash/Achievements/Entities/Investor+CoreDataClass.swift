@@ -2,7 +2,7 @@
 //  Investor+CoreDataClass.swift
 //  
 //
-//  Created by Julio Reyes on 8/1/18.
+//  Created by Julio Reyes on 8/2/18.
 //
 //
 

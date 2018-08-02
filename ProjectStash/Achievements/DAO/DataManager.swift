@@ -60,9 +60,10 @@ extension DataManager{
             throw CoreDataError.objectNotFound
         }
         
+        let coredataModel = try InvestorModel(overview: overview, achievements: achievements).jsonString()
         let investor = Investor(entity: newInvestor, insertInto: moc)
-        investor.investorOverviewTitle = overview.title as String
-        investor.investorAchievements = achievements as NSObject
+        investor.investorAchievements = coredataModel
+
         if moc.hasChanges {
             do {
                 try moc.save()

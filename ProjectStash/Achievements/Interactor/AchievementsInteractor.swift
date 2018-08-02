@@ -20,9 +20,8 @@ class AchievementsInteractor: AchievementsInteractorProtocol {
         do {
             if let investorList = try dataManager?.retrieveInvestorList(){
                 // Create list of investors in adherence to the InvestorModel
-                let investorModelList = investorList.map(){ entry -> InvestorModel in
-                    let overView = Overview(title: entry.investorOverviewTitle!)
-                    return InvestorModel(overview: overView, achievements: entry.investorAchievements as! [Achievements])
+                let investorModelList = try investorList.map(){ entry -> InvestorModel in
+                    return try InvestorModel.init(entry.investorAchievements!)
                 }
                 if investorModelList.isEmpty{
                     dataManager?.retrieveInformationFromJSON()
