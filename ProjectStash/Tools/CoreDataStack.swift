@@ -31,7 +31,7 @@ public final class CoreDataStack: NSObject {
             
             let options = [NSMigratePersistentStoresAutomaticallyOption : true, NSInferMappingModelAutomaticallyOption : true]
             
-            try mainpersistentStoreCoordinator!.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: "", at: CoreDataStack.defaultStoreURL, options: options)
+            try mainpersistentStoreCoordinator!.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: CoreDataStack.defaultStoreURL, options: options)
             mainmanagedObjectContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
             mainmanagedObjectContext!.persistentStoreCoordinator = mainpersistentStoreCoordinator
             mainmanagedObjectContext!.undoManager = nil

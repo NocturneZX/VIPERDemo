@@ -38,6 +38,7 @@ extension AchievementsViewController: UITableViewDataSource, UITableViewDelegate
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "AchievementsIdentifier", for: indexPath) as! AchievementsTableViewCell
+        cell.prepareForReuse()
         
         let post = achievements[indexPath.row]
         cell.setCell(forAchievements: post)
@@ -47,5 +48,14 @@ extension AchievementsViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return achievements.count > 0 ? achievements.count : 0
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.contentView.layer.masksToBounds = true;
+        cell.contentView.layer.cornerRadius = 9.0;
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 225
     }
 }

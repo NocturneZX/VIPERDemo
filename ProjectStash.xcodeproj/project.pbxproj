@@ -10,6 +10,7 @@
 		32EAEA02631086F73D6E2967 /* Pods_ProjectStash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30CD6CF314B2439529B0A420 /* Pods_ProjectStash.framework */; };
 		4D27424C2113CBE500314F7E /* Investor+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D27424A2113CBE500314F7E /* Investor+CoreDataClass.swift */; };
 		4D27424D2113CBE500314F7E /* Investor+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D27424B2113CBE500314F7E /* Investor+CoreDataProperties.swift */; };
+		4D27424F2114397A00314F7E /* UIImageViewWithMask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D27424E2114397A00314F7E /* UIImageViewWithMask.swift */; };
 		4D3798D92109173400A6B1B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3798D82109173400A6B1B6 /* AppDelegate.swift */; };
 		4D3798DE2109173400A6B1B6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4D3798DC2109173400A6B1B6 /* Main.storyboard */; };
 		4D3798E12109173400A6B1B6 /* ProjectStash.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 4D3798DF2109173400A6B1B6 /* ProjectStash.xcdatamodeld */; };
@@ -48,6 +49,7 @@
 		4D2742492113C74500314F7E /* ProjectStash 3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ProjectStash 3.xcdatamodel"; sourceTree = "<group>"; };
 		4D27424A2113CBE500314F7E /* Investor+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Investor+CoreDataClass.swift"; path = "/Users/Nocturne/Desktop/ProjectStash/ProjectStash/Achievements/Entities/Investor+CoreDataClass.swift"; sourceTree = "<absolute>"; };
 		4D27424B2113CBE500314F7E /* Investor+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Investor+CoreDataProperties.swift"; path = "/Users/Nocturne/Desktop/ProjectStash/ProjectStash/Achievements/Entities/Investor+CoreDataProperties.swift"; sourceTree = "<absolute>"; };
+		4D27424E2114397A00314F7E /* UIImageViewWithMask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageViewWithMask.swift; sourceTree = "<group>"; };
 		4D3798D52109173400A6B1B6 /* ProjectStash.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectStash.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D3798D82109173400A6B1B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4D3798DD2109173400A6B1B6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -201,6 +203,7 @@
 			children = (
 				4D37990121093DD600A6B1B6 /* AchievementsViewController.swift */,
 				4D37992C210F92C600A6B1B6 /* AchievementsTableViewCell.swift */,
+				4D27424E2114397A00314F7E /* UIImageViewWithMask.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -420,6 +423,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D27424F2114397A00314F7E /* UIImageViewWithMask.swift in Sources */,
 				4D37990921093DD600A6B1B6 /* AchievementsInteractor.swift in Sources */,
 				4D37990621093DD600A6B1B6 /* AchievementsRouter.swift in Sources */,
 				4D3798E12109173400A6B1B6 /* ProjectStash.xcdatamodeld in Sources */,
