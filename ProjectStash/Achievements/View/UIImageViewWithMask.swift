@@ -10,14 +10,29 @@ import UIKit
 
 @IBDesignable
 class UIImageViewWithMask: UIImageView {
+    var maskedView = UIImageView()
     var maskedImageView = UIImageView()
     
     @IBInspectable
     var maskImage : UIImage? {
         didSet{
-            maskedImageView.image = maskImage
-            maskedImageView.frame = bounds
-            self.mask = maskedImageView
+            maskedView.image = maskImage
+            updateView()
+        }
+    }
+    
+    func updateView(){
+        maskedImageView.image = image
+        if (maskedView.image != nil){
+            maskedView.frame = bounds
+            maskedView.contentMode = .scaleAspectFit
+            
+            maskedImageView.frame = maskedView.frame
+            maskedImageView.contentMode = .center
+            
+            maskedView.layer.mask = maskedImageView.layer
+            
+            addSubview(maskedView)
         }
     }
     /*
