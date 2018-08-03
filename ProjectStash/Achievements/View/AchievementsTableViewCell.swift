@@ -39,7 +39,7 @@ class AchievementsTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-       // setLevelImageLayout()
+        contentView.frame = UIEdgeInsetsInsetRect(contentView.frame, UIEdgeInsetsMake(10, 10, 10, 10))
     }
     
     func setCell(forAchievements model: Achievements) {

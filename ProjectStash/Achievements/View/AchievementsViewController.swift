@@ -54,8 +54,8 @@ extension AchievementsViewController: UITableViewDataSource, UITableViewDelegate
         cell.contentView.layer.masksToBounds = true;
         cell.contentView.layer.cornerRadius = 9.0;
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 225
+    // Set the spacing between sections
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 5
     }
 }

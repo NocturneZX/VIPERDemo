@@ -23,6 +23,7 @@ class UIImageViewWithMask: UIImageView {
     
     func updateView(){
         maskedImageView.image = image
+        
         if (maskedView.image != nil){
             maskedView.frame = bounds
             maskedView.contentMode = .scaleAspectFit
