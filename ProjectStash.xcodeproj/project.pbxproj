@@ -145,6 +145,7 @@
 		4D3798FB21091C7400A6B1B6 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
+				4D27424E2114397A00314F7E /* UIImageViewWithMask.swift */,
 				4D3798FC21091C9900A6B1B6 /* CoreDataStack.swift */,
 			);
 			path = Tools;
@@ -203,7 +204,6 @@
 			children = (
 				4D37990121093DD600A6B1B6 /* AchievementsViewController.swift */,
 				4D37992C210F92C600A6B1B6 /* AchievementsTableViewCell.swift */,
-				4D27424E2114397A00314F7E /* UIImageViewWithMask.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -367,11 +367,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-ProjectStashTests/Pods-ProjectStashTests-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Toucan/Toucan.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toucan.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -405,11 +407,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-ProjectStash/Pods-ProjectStash-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/Toucan/Toucan.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Toucan.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;

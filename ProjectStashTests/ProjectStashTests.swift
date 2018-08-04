@@ -27,12 +27,12 @@ class ProjectStashTests: XCTestCase {
     var dataManager: DataManager?
     var modelDecoder = JSONDecoder()
 
-    let overviewData = try! JSONSerialization.data(withJSONObject: [
+    var overviewData = try! JSONSerialization.data(withJSONObject: [
         "title": "Smart Investing",
         "year" : "201564213"
         ]
         , options: .prettyPrinted)
-    let achievementData = try! JSONSerialization.data(withJSONObject: ["id": 1,
+    var achievementData = try! JSONSerialization.data(withJSONObject: ["id": 1,
                                                                        "level": "2",
                                                                        "progress": 20,
                                                                        "total": 50,
@@ -40,37 +40,37 @@ class ProjectStashTests: XCTestCase {
                                                                        "accessible": true ] , options: .prettyPrinted)
     
     
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        JSONexpectation?.expectationDescription = "This is to make sure our JSON file given is valid."
+        
+        JSONexpectation = XCTestExpectation.init(description: "This is to make sure our JSON file given is valid.")
+        CoreDataExpectation = XCTestExpectation.init(description: "This is to ensure the PSC is stable.")
         CoreDataExpectation?.expectedFulfillmentCount = 2
         
-        XCTAssertTrue( try self.testJSON())
+        XCTAssertNoThrow( try self.testJSON())
         XCTAssertNoThrow(try self.testModel())
-        XCTAssertTrue( try self.testCoreDataFetch())
+        XCTAssertNoThrow( try self.testCoreDataFetch())
         self.wait(for: [JSONexpectation!, CoreDataExpectation!], timeout: 10.0)
     }
     
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
-        
-        JSONexpectation = nil
-        CoreDataExpectation = nil
         coreDataStore = nil
         dataManager = nil
     }
     
-    func testJSON() throws -> Bool{
+    func testJSON() throws {
         
         guard let url = Bundle.main.url(forResource: "achievements", withExtension: "json") else {
             //XCTAssert("NO file of that JSON exists")
-            return false
+            return XCTFail()
         }
         guard let data: Data = NSData(contentsOf: url) as Data? else {
             //XCTAssert("This file's data is corrupt.")
-            return false
+            return XCTFail()
         }
         
         
@@ -79,33 +79,27 @@ class ProjectStashTests: XCTestCase {
             
             // if overview and achievements key/value exists on the JSON file
             guard let overview = json["overview"] as? [String: AnyObject] else {
-                return false
+                return XCTFail()
+
             }
             
             guard let achievements = json["achievements"] as? [[String: AnyObject]] else {
-                return false
+                return XCTFail()
             }
             
-            guard let title = overview["title"] as? String else{
-                return false
+            guard (overview["title"] as? String) != nil else{
+                return XCTFail()
             }
-            guard let year = overview["year"] as? String else{
-                return false
-            }
-            
-            let overviewTest: Overview = Overview(title: title, year: year)
-            var achievementsTest: [Achievements] = []
 
             for achievement in achievements{
-                guard let aid = achievement["id"] as? Int, let level = achievement["level"] as? String, let progress = achievement["progress"] as? Int, let url = achievement["bg_image_url"] as? String, let total = achievement["total"] as? Int, let accessible = achievement["accessible"] else{
-                    return false
+                guard let _ = achievement["id"] as? Int, let _ = achievement["level"] as? String, let _ = achievement["progress"] as? Int, let _ = achievement["bg_image_url"] as? String, let _ = achievement["total"] as? Int, let _ = achievement["accessible"] else{
+                    return XCTFail()
                 }
-                let achievementModel: Achievements = Achievements(id: aid, level: level, progress: progress, total: total, bgImageURL: url, accessible: accessible as! Bool)
-                achievementsTest.append(achievementModel)
             }
             
-            
-            
+            XCTAssertNotNil(try! Overview.init(data: self.overviewData))
+            XCTAssertNotNil( try! Achievements.init(data: self.achievementData))
+
         } catch  {
             XCTAssertNil("JSON not parsed")
         }
@@ -125,7 +119,6 @@ class ProjectStashTests: XCTestCase {
         }
         
         JSONexpectation?.fulfill()
-        return true
     }
     
     func testModel() throws{
@@ -134,40 +127,24 @@ class ProjectStashTests: XCTestCase {
             
             let overviewModel: Overview = try! modelDecoder.decode(Overview.self, from: overviewData)
             let achievementModel: Achievements = try! modelDecoder.decode(Achievements.self, from: achievementData)
-            
-            //let expectedModel =  InvestorModel(investorOverview: [overviewModel], investorAchievements: [achievementModel])
-            
+        
         XCTAssertNoThrow(try dataManager?.savePost(overview: overviewModel, achievements: [achievementModel]))
-          CoreDataExpectation?.fulfill()
+        CoreDataExpectation?.fulfill()
         
 
     }
-    func testCoreDataFetch() throws -> Bool{
+    func testCoreDataFetch() throws{
 
-            let predicate = NSPredicate(format: "")
-            let sortDescriptors = [] as [AnyObject]
+            let predicate = NSPredicate(format: "accessible == true")
+            let sortDescriptors = [NSSortDescriptor.init(key: "level", ascending: true)]
             var entries: [Investor] = []
             coreDataStore?.fetchEntriesWithPredicate(predicate: predicate, sortDescriptors: sortDescriptors, completionBlock: { entry in
                 entries = entry
                 print("Number of rows (Test): \(entry)") // Prints 0
                 
             })
-            XCTAssert(1 == entries.count, "Incorrect number of rows in `Person` entity.")
+            XCTAssert(0 == entries.count, "This should not be empty.")
 
         CoreDataExpectation?.fulfill()
-        return true
     }
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
-    
 }

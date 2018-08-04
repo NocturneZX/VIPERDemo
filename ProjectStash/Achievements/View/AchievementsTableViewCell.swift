@@ -8,6 +8,7 @@
 
 import UIKit
 import AlamofireImage
+import Toucan
 
 class AchievementsTableViewCell: UITableViewCell {
 
@@ -17,14 +18,6 @@ class AchievementsTableViewCell: UITableViewCell {
     @IBOutlet weak var progressBar: UIProgressView!
     @IBOutlet weak var progressLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
-    
-    @IBInspectable
-    var maskImage : UIImage? {
-        didSet{
-            levelImageView.image = maskImage
-            self.mask = levelImageView
-        }
-    }
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -51,13 +44,15 @@ class AchievementsTableViewCell: UITableViewCell {
         levelLabel?.text = model.level
         progressLabel?.text = String("\(model.progress) pts")
         totalLabel?.text = String("\(model.total) pts")
-        let trueProgressValue = model.progress / model.total
-        print("\(model.progress)")
-        if trueProgressValue > 0 { progressBar.setProgress(Float(trueProgressValue), animated: true) }
+        let trueProgressValue = Float(model.progress) / Float(model.total)
+        print("\(model.progress)  \(model.total) \(trueProgressValue)")
+        if trueProgressValue > 0 { progressBar.setProgress(trueProgressValue, animated: true) }
 
         let url = URL(string: model.bgImageURL)!
         let placeholderImage = UIImage(named: "BR2049")!
         cellBackgroundImageView?.af_setImage(withURL: url, placeholderImage: placeholderImage) // Download image async
+        
+        levelImageView.image = Toucan(image: levelImageView.image!).maskWithImage(maskImage: UIImage(named: "mask")!).image
     }
     
 //    func setLevelImageLayout(){

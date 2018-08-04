@@ -35,12 +35,8 @@ class DataManager: LocalDataManagerInputProtocol{
         if let path = Bundle.main.path(forResource: "achievements", ofType: "json") {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped)
-                let jsonPrint = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
-                let jsonObj = try JSONDecoder().decode(InvestorModel.self, from: data)
-//                print("jsonData:\(jsonObj.overview)")
-//                print("jsonData:\(String(describing: jsonObj.achievements))")
+                let jsonObj = try InvestorModel.init(data: data)
                 try outputHandler?.onAchievementsRetrieved([jsonObj])
-                print("jsonData:\(jsonPrint)")
             } catch let error {
                 print("parse error: \(error.localizedDescription)")
             }
@@ -60,6 +56,7 @@ extension DataManager{
             throw CoreDataError.objectNotFound
         }
         
+        // To expidiate the process, I set up my structs so that it can be easily formatted and encoded into a JSON string that the data model can pull up 
         let coredataModel = try InvestorModel(overview: overview, achievements: achievements).jsonString()
         let investor = Investor(entity: newInvestor, insertInto: moc)
         investor.investorAchievements = coredataModel
