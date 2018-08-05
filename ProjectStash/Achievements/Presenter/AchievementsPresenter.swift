@@ -26,6 +26,7 @@ class AchievementsPresenter: AchievementsPresenterProtocol {
     }
     
     func viewDidLoad(){
+        
         interactor?.retrieveInvestorList()
     }
 

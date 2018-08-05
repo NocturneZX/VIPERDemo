@@ -1,0 +1,6 @@
+framework module Pods_ProjectStashTests {
+  umbrella header "Pods-ProjectStashTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

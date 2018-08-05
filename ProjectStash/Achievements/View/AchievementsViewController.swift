@@ -30,6 +30,8 @@ extension AchievementsViewController: AchievementsViewProtocol {
     func showAchievements(forInvestor investor: [InvestorModel]) {
         overview = investor[0].overview
         achievements = investor[0].achievements
+        
+        self.navigationItem.title = overview?.title
         tableView.reloadData()
     }
 }

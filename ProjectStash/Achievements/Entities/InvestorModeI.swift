@@ -63,15 +63,6 @@ extension InvestorModel {
         try self.init(data: try Data(contentsOf: url))
     }
     
-    func with(
-        overview: Overview? = nil,
-        achievements: [Achievements]? = nil
-        ) -> InvestorModel {
-        return InvestorModel(
-            overview: overview ?? self.overview,
-            achievements: achievements ?? self.achievements
-        )
-    }
     
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
@@ -98,23 +89,6 @@ extension Achievements {
         try self.init(data: try Data(contentsOf: url))
     }
     
-    func with(
-        id: Int? = nil,
-        level: String? = nil,
-        progress: Int? = nil,
-        total: Int? = nil,
-        bgImageURL: String? = nil,
-        accessible: Bool? = nil
-        ) -> Achievements {
-        return Achievements(
-            id: id ?? self.id,
-            level: level ?? self.level,
-            progress: progress ?? self.progress,
-            total: total ?? self.total,
-            bgImageURL: bgImageURL ?? self.bgImageURL,
-            accessible: accessible ?? self.accessible
-        )
-    }
     
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)
@@ -141,14 +115,6 @@ extension Overview {
         try self.init(data: try Data(contentsOf: url))
     }
     
-    func with(
-        title: String? = nil,
-        year: String? = nil
-        ) -> Overview {
-        return Overview(
-            title: title ?? self.title
-        )
-    }
     
     func jsonData() throws -> Data {
         return try JSONEncoder().encode(self)

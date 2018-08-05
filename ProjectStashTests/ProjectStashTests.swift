@@ -20,13 +20,10 @@ enum ReceiverError: Error {
 
 class ProjectStashTests: XCTestCase {
     
-    var JSONexpectation: XCTestExpectation?
-    var CoreDataExpectation: XCTestExpectation?
-    
     var coreDataStore: CoreDataStack?
     var dataManager: DataManager?
     var modelDecoder = JSONDecoder()
-
+    
     var overviewData = try! JSONSerialization.data(withJSONObject: [
         "title": "Smart Investing",
         "year" : "201564213"
@@ -41,18 +38,14 @@ class ProjectStashTests: XCTestCase {
     
     
     
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
         
-        JSONexpectation = XCTestExpectation.init(description: "This is to make sure our JSON file given is valid.")
-        CoreDataExpectation = XCTestExpectation.init(description: "This is to ensure the PSC is stable.")
-        CoreDataExpectation?.expectedFulfillmentCount = 2
-        
-        XCTAssertNoThrow( try self.testJSON())
+        XCTAssertNoThrow( try self.verifyJSON())
         XCTAssertNoThrow(try self.testModel())
         XCTAssertNoThrow( try self.testCoreDataFetch())
-        self.wait(for: [JSONexpectation!, CoreDataExpectation!], timeout: 10.0)
     }
     
     override func tearDown() {
@@ -62,8 +55,8 @@ class ProjectStashTests: XCTestCase {
         dataManager = nil
     }
     
-    func testJSON() throws {
-        
+    func verifyJSON() throws{
+        // Verify that the JSON can be decoded. It shoudl not crash no matter how
         guard let url = Bundle.main.url(forResource: "achievements", withExtension: "json") else {
             //XCTAssert("NO file of that JSON exists")
             return XCTFail()
@@ -73,78 +66,49 @@ class ProjectStashTests: XCTestCase {
             return XCTFail()
         }
         
+        // Verify that the JSON is in the correct format
+        let json = try! JSONSerialization.jsonObject(with: data as Data, options: .allowFragments) as! [String: Any]
         
-        do {
-            let json = try JSONSerialization.jsonObject(with: data as Data, options: .allowFragments) as! [String: Any]
+        // if overview and achievements key/value pair are in the correct format on the JSON file
+        guard let overview = json["overview"] as? [String: AnyObject] else {
+            return XCTFail()
             
-            // if overview and achievements key/value exists on the JSON file
-            guard let overview = json["overview"] as? [String: AnyObject] else {
-                return XCTFail()
-
-            }
-            
-            guard let achievements = json["achievements"] as? [[String: AnyObject]] else {
-                return XCTFail()
-            }
-            
-            guard (overview["title"] as? String) != nil else{
-                return XCTFail()
-            }
-
-            for achievement in achievements{
-                guard let _ = achievement["id"] as? Int, let _ = achievement["level"] as? String, let _ = achievement["progress"] as? Int, let _ = achievement["bg_image_url"] as? String, let _ = achievement["total"] as? Int, let _ = achievement["accessible"] else{
-                    return XCTFail()
-                }
-            }
-            
-            XCTAssertNotNil(try! Overview.init(data: self.overviewData))
-            XCTAssertNotNil( try! Achievements.init(data: self.achievementData))
-
-        } catch  {
-            XCTAssertNil("JSON not parsed")
+        }
+        guard let achievements = json["achievements"] as? [[String: AnyObject]] else {
+            return XCTFail()
+        }
+        guard (overview["title"] as? String) != nil else{
+            return XCTFail()
         }
         
-       // let expectedModel =  InvestorModel(investorOverview: [overviewModel], investorAchievements: [achievementModel])
-        if let path = Bundle.main.path(forResource: "achievements", ofType: "json") {
-            do {
-                let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped)
-                let jsonObj = try modelDecoder.decode(InvestorModel.self, from: data)
-                print("jsonData:\(jsonObj)")
-                XCTAssertNotNil(jsonObj)
-            } catch let error {
-                print("parse error: \(error.localizedDescription)")
+        for achievement in achievements{
+            guard let _ = achievement["id"] as? Int, let _ = achievement["level"] as? String, let _ = achievement["progress"] as? Int, let _ = achievement["bg_image_url"] as? String, let _ = achievement["total"] as? Int, let _ = achievement["accessible"] else{
+                return XCTFail()
             }
-        } else {
-            print("Invalid filename/path.")
         }
-        
-        JSONexpectation?.fulfill()
     }
     
     func testModel() throws{
 
-            let modelDecoder = JSONDecoder()
-            
-            let overviewModel: Overview = try! modelDecoder.decode(Overview.self, from: overviewData)
-            let achievementModel: Achievements = try! modelDecoder.decode(Achievements.self, from: achievementData)
+        let overviewModel = try Overview.init(String(data: overviewData, encoding: String.Encoding.utf8)!)
+        let achievementModel = try Achievements.init(String(data: achievementData, encoding: String.Encoding.utf8)!)
         
+        XCTAssertNotNil(overviewModel)
+        XCTAssertNotNil(achievementModel)
         XCTAssertNoThrow(try dataManager?.savePost(overview: overviewModel, achievements: [achievementModel]))
-        CoreDataExpectation?.fulfill()
         
-
     }
     func testCoreDataFetch() throws{
-
-            let predicate = NSPredicate(format: "accessible == true")
-            let sortDescriptors = [NSSortDescriptor.init(key: "level", ascending: true)]
-            var entries: [Investor] = []
-            coreDataStore?.fetchEntriesWithPredicate(predicate: predicate, sortDescriptors: sortDescriptors, completionBlock: { entry in
-                entries = entry
-                print("Number of rows (Test): \(entry)") // Prints 0
-                
-            })
-            XCTAssert(0 == entries.count, "This should not be empty.")
-
-        CoreDataExpectation?.fulfill()
+        
+        let predicate = NSPredicate(format: "accessible == true")
+        let sortDescriptors = [NSSortDescriptor.init(key: "level", ascending: true)]
+        var entries: [Investor] = []
+        coreDataStore?.fetchEntriesWithPredicate(predicate: predicate, sortDescriptors: sortDescriptors, completionBlock: { entry in
+            entries += entry
+            print("Number of rows (Test): \(entry)") // Prints 0
+            
+        })
+        XCTAssert(0 == entries.count, "This should not be empty.")
+        
     }
 }

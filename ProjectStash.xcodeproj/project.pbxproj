@@ -28,7 +28,6 @@
 		4D37992D210F92C600A6B1B6 /* AchievementsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D37992C210F92C600A6B1B6 /* AchievementsTableViewCell.swift */; };
 		4D379963211140BE00A6B1B6 /* achievements.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D379962211140BE00A6B1B6 /* achievements.json */; };
 		4D379964211140BE00A6B1B6 /* achievements.json in Resources */ = {isa = PBXBuildFile; fileRef = 4D379962211140BE00A6B1B6 /* achievements.json */; };
-		4D3799662112286800A6B1B6 /* JSONCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3799652112286800A6B1B6 /* JSONCall.swift */; };
 		AB0951FA7CCF6F76FC00F850 /* Pods_ProjectStashTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31BFC4B23440B8BCFA5207A9 /* Pods_ProjectStashTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -70,7 +69,6 @@
 		4D379922210BABE700A6B1B6 /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
 		4D37992C210F92C600A6B1B6 /* AchievementsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementsTableViewCell.swift; sourceTree = "<group>"; };
 		4D379962211140BE00A6B1B6 /* achievements.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = achievements.json; sourceTree = "<group>"; };
-		4D3799652112286800A6B1B6 /* JSONCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONCall.swift; sourceTree = "<group>"; };
 		4D37996F2112433F00A6B1B6 /* ProjectStash 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "ProjectStash 2.xcdatamodel"; sourceTree = "<group>"; };
 		A48D96BBAD125519FA6790BB /* Pods-ProjectStash.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectStash.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProjectStash/Pods-ProjectStash.release.xcconfig"; sourceTree = "<group>"; };
 		B518DAC93D8806316C6156B0 /* Pods-ProjectStashTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProjectStashTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProjectStashTests/Pods-ProjectStashTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -212,7 +210,6 @@
 			isa = PBXGroup;
 			children = (
 				4D379922210BABE700A6B1B6 /* DataManager.swift */,
-				4D3799652112286800A6B1B6 /* JSONCall.swift */,
 			);
 			path = DAO;
 			sourceTree = "<group>";
@@ -439,7 +436,6 @@
 				4D3798FD21091C9900A6B1B6 /* CoreDataStack.swift in Sources */,
 				4D27424D2113CBE500314F7E /* Investor+CoreDataProperties.swift in Sources */,
 				4D37992D210F92C600A6B1B6 /* AchievementsTableViewCell.swift in Sources */,
-				4D3799662112286800A6B1B6 /* JSONCall.swift in Sources */,
 				4D379923210BABE700A6B1B6 /* DataManager.swift in Sources */,
 				4D37990821093DD600A6B1B6 /* AchievementsProtocols.swift in Sources */,
 			);
