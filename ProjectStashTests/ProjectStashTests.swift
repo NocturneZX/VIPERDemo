@@ -19,11 +19,6 @@ enum ReceiverError: Error {
 }
 
 class ProjectStashTests: XCTestCase {
-    
-    var coreDataStore: CoreDataStack?
-    var dataManager: DataManager?
-    var modelDecoder = JSONDecoder()
-    
     var overviewData = try! JSONSerialization.data(withJSONObject: [
         "title": "Smart Investing",
         "year" : "201564213"
@@ -37,6 +32,14 @@ class ProjectStashTests: XCTestCase {
                                                                        "accessible": true ] , options: .prettyPrinted)
     
     
+    
+    var coreDataStore: CoreDataStack?
+    var dataManager: DataManager?
+    var modelDecoder = JSONDecoder()
+    
+    var presenter: AchievementsPresenterProtocol!
+    var interactor: AchievementsInteractorProtocol!
+    var router: AchievementsRouter!
     
     
     override func setUp() {
@@ -111,4 +114,72 @@ class ProjectStashTests: XCTestCase {
         XCTAssert(0 == entries.count, "This should not be empty.")
         
     }
+    
+    // MARK: - Testing Architecture
+    func testArchitecture(){
+        
+        let testExpectation = expectation(description: #function)
+        interactor = AchievementsInteractor()
+        router = AchievementsRouter()
+        presenter = AchievementsPresenter()
+        
+        let overviewModel = try! Overview.init(String(data: overviewData, encoding: String.Encoding.utf8)!)
+        let achievementModel = try! Achievements.init(String(data: achievementData, encoding: String.Encoding.utf8)!)
+        
+        let investorModel = InvestorModel(overview: overviewModel, achievements: [achievementModel])
+
+        XCTAssertNotNil(router)
+        interactor.retrieveInvestorList()
+        presenter.didRetrieveAchievements([investorModel])
+        testExpectation.fulfill()
+        
+        waitForExpectations(timeout: 10.0, handler: nil)
+    }
+}
+
+
+extension ProjectStashTests {
+    class AchievementsPresenter: AchievementsPresenterProtocol{
+        var view: AchievementsViewProtocol?
+        
+        var wireFrame: AchievementsWireframeProtocol?
+        
+        var interactor: AchievementsInteractorProtocol?
+        
+        var investor: InvestorModel?
+        
+        var didRetrieve  = false
+        var didLoad = false
+        
+        func viewDidLoad() {
+            didLoad = true
+        }
+        
+        func didRetrieveAchievements(_ investor: [InvestorModel]) {
+            didRetrieve = true
+        }
+        
+
+    
+    }
+    
+    class testInteractor: AchievementsInteractorProtocol{
+        var presenter: AchievementsPresenterProtocol?
+        
+        var dataManager: LocalDataManagerInputProtocol?
+        
+        var didRetrieveList = false
+        
+        func retrieveInvestorList() {
+            didRetrieveList = true
+        }
+        
+    }
+    
+    class TestRouter: AchievementsWireframeProtocol{
+        static func createAchievementsModule() -> UIViewController {
+            return UIViewController()
+        }
+    }
+
 }

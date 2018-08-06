@@ -1,25 +1,20 @@
 #### Objective
-We need to implement the next iteration of the Stash Coach feature.  First step is to display to the user a list of achievements they can reach.  
-
-#### Implementation
-Implement the Achievements list screen using the VIPER architecture.  You can use any other tools/frameworks you deem necessary.
+I manage to complete the project. It took me a full week for two things. One) This project was an introduction to the VIPER Architecture. I have heard about this architecture briefly back when I was in TurnToTech, but never had an opportunity. Two) There seemed to be new ways to parsing JSON using the Codable protocol. I will say that it beats the days of NSCoding where it was used to serialize JSON objects. String, Int, Array, Dictionary all conform to the protocol, hence the decision to make the change. Codable also allows new objects to be easily added if a JSON structure is updated.
 
 #### Design
-The design for the new achievements screen can be found here. [Zeplin](https://scene.zeplin.io/project/5a5f7e1b4f9f24b874e0f19f/screen/5a60bbcacf6165237301ee21)
-<br>_Note: do not include the images from the Zeplin project directly in your project._
+According to what I grasped on VIPER, the achievements were the key to the project. So I had to create, at least, five different classes with distinct roles. I think for every object made in an app, you'd have to have the 5 classes implemented, hence the reason this architecture is used for highly scaled applications. The Router class seems to be the only one that creates the module to couple the VIPER classes for the object.
 
-#### Data
-The sample data you need to retrieve/display can be found in the included _achievements.json_ file.  Please use this file in the challenge, but implement the challenge without needing an actual backend server.
+#### Implementation
+Implementation was time-consuming initially. I started with creating the classes manually, but it took a considerable amount of  time not only understanding the architecture, but applying it. I ended up installing an XCode module that create the VIPER classes for every object I felt needed a module. In this particular case, One. 
 
-#### Criteria
-Some of the criteria that we take into account when we look at your code:
-  - Knowledge of the platform/language patterns and idioms + ability to use them efficiently
-  - Ability to write clean, non-over-engineered, testable, and extensible code
-  - Ability to make smart architectural decisions and handle trade-offs
-  - Ability to stick to the given requirements/design
+I made a couple of key mistakes in this app.  For one thing, I should have implemented the project in MVC, first. I dove straight into VIPER and I ended up being tangled in implementing each VIPER class whilst implementing the rest of the project such as Core Data and its respective model. While I find this excellent in understanding certain concepts, implementing the program first would have shifted the focus more unto understanding the architecture. Another was that, I humbly and shamfeully admit, I haven't worked in Core Data for a long time. My last Core Data Stack I made needed to be updated badly and I spent some time restructuring it. One of my projects in GitHub shows my old Obj-C Core Data stack. I'm still learning new things such as NSPersistentContainer, but I did not wish to to spread myself thin in learning the new things that comes with this project. It was a tough call in my end, but I thought that it was the right choice.
 
-#### Resources
-[Architecting iOS Apps with VIPER](https://www.objc.io/issues/13-architecture/viper/)  
-[VIPER Design Pattern For iOS Application Development](https://medium.com/@smalam119/viper-design-pattern-for-ios-application-development-7a9703902af6)  
+#### Criticism of the VIPER Architecture
+I like this architecture. It provides a sense of order that MVC never had. The main problem with MVC is that it took care of everything. Business model, presenting the view, setting up multiple delegates to populate the view; It never was meant to be sustainable. VIPER introduces a rigidness that is needed for large projects because I have seen large projects with my experience. It is not pretty. 
+
+Another thing about VIPER is that it is very protcol-oriented. For every VIPER classes, I had to create, at least, one protocol in order to couple other respective VIPER classes. I never used so many protocols in my life. Every change I needed to make in these classes, I need to update its respective protocols. So much so, I need to create a class that houses these protocol. It reminded me so much of method swizzling where you would change the implementation of a function, prime example would be the presenter's viewDidLoad and the standard viewDidLoad. 
+
+One standard week isn't enough to familiarize with VIPER, but I did learn a lot.
+
+#### Resources Used
 [Building iOS App With VIPER Architecture](https://blog.mindorks.com/building-ios-app-with-viper-architecture-8109acc72227)  
-[iOS Project Architecture: Using VIPER](https://cheesecakelabs.com/blog/ios-project-architecture-using-viper/)

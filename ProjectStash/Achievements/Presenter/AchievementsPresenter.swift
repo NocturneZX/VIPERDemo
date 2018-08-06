@@ -26,7 +26,6 @@ class AchievementsPresenter: AchievementsPresenterProtocol {
     }
     
     func viewDidLoad(){
-        
         interactor?.retrieveInvestorList()
     }
 
@@ -34,6 +33,6 @@ class AchievementsPresenter: AchievementsPresenterProtocol {
 
 extension AchievementsPresenter{    
     func didRetrieveAchievements(_ investor: [InvestorModel]) {
-        view?.showAchievements(forInvestor: investor) // Since there is only one entry, presumably it would be the selected row of a list of investors
+        view?.showAchievements(forInvestor: investor)
     }
 }

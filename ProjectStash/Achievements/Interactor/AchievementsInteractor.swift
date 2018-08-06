@@ -17,6 +17,8 @@ class AchievementsInteractor: AchievementsInteractorProtocol {
     var dataManager: LocalDataManagerInputProtocol?
     
     func retrieveInvestorList() {
+        
+        // Retrieve the List of achievements. It will populate the list from the Core Data store first. If it is unable to, it will get the information from the JSON file. in either case, the collection will be sent to the Presenter.
         do {
             if let investorList = try dataManager?.retrieveInvestorList(){
                 // Create list of investors in adherence to the InvestorModel

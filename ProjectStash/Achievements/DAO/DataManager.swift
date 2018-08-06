@@ -32,6 +32,7 @@ class DataManager: LocalDataManagerInputProtocol{
 
     
     func retrieveInformationFromJSON(){
+        // Extract values from the JSON fileCodable model
         if let path = Bundle.main.path(forResource: "achievements", ofType: "json") {
             do {
                 let data = try Data(contentsOf: URL(fileURLWithPath: path), options: .alwaysMapped)
@@ -56,7 +57,7 @@ extension DataManager{
             throw CoreDataError.objectNotFound
         }
         
-        // To expidiate the process, I set up my structs so that it can be easily formatted and encoded into a JSON string that the data model can pull up 
+        // To expidiate the process, I set up my structs so that it can be easily formatted and encoded into a JSON string that the data model can pull up. Fortunately the way the model is structure, it is malleable enough to create objects from an updated JSON, as long as it is able to put in the values from the JSON into my Codable model
         let coredataModel = try InvestorModel(overview: overview, achievements: achievements).jsonString()
         let investor = Investor(entity: newInvestor, insertInto: moc)
         investor.investorAchievements = coredataModel
